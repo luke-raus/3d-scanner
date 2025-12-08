@@ -24,8 +24,7 @@ void setup() {
   
   // Enable the stepper drivers (LOW typically enables)
   digitalWrite(ENABLE_PIN, LOW);
-  Serial.println("System Ready - Stepper + Distance Sensor");
-  Serial.println("Step, Voltage, Raw Value");
+  Serial.println("start");
 }
 
 void loop() {
@@ -39,8 +38,8 @@ void loop() {
     delay(50);
     digitalWrite(M1_STEP_PIN, LOW);
     delay(50);
-    // Take distance reading every 10 steps
-    readAndPrintDistance();
+
+    readAndPrintDistance(i);
   }
 
   delay(100);
@@ -58,16 +57,17 @@ void loop() {
     readAndPrintDistance();
   }
 
+  Serial.println("done")
+
 }
 
 // Function to read sensor and print data
-void readAndPrintDistance() {
+void readAndPrintDistance(int steps) {
   sensorValue = analogRead(analogPin);
   voltage = (sensorValue * 5.0) / 1023.0;   // (Digital back to analog: what was the voltage)
 
   // Print formatted data to serial monitor
-  Serial.print(" | Voltage: ");
-  Serial.print(voltage, 5);
-  Serial.print(" V | Raw: ");
-  Serial.println(sensorValue);
+  Serial.print(steps);
+  Serial.print(",");
+  Serial.println(voltage, 4);
 }
